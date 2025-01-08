@@ -4,9 +4,12 @@ Tach Stack = ReactJS , Redux , Tailwind CSS
 
 - Create React App
 - Configured Tailwind CSS
--Header
--Login Form
-
+- Header
+- Routing Of App
+- Login Form
+- Sign Up Form
+- Form Validation
+- Useref Hook
 
 Feature : 
 

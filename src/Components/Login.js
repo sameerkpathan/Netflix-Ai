@@ -1,8 +1,40 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
+import { chechVlidateData } from "../Utils/Validate";
 
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  let email = useRef(null);
+  let password = useRef(null);
+  let fullName = useRef(null);
+
+  // Validate the form Data
+  const handleClickButton = () => {
+
+    if(!isSignInForm && fullName.current.value === ""){
+      alert("Please write your Name")
+   }
+    else if (email.current.value === "") {
+      alert("Please write your Email");
+    } 
+    else if (password.current.value === "") {
+      alert("Please Write your Password");
+    }
+    else {
+      console.log(email.current.value);
+      console.log(password);
+
+      const message = chechVlidateData(
+        email.current.value,
+        password.current.value
+      );
+
+      console.log(message);
+      setErrorMessage(message);
+    }
+  };
 
   const toggleSignInForm = () => {
     setSignInForm(!isSignInForm);
@@ -17,7 +49,13 @@ const Login = () => {
           alt="Background"
         />
       </div>
-      <form className="absolute w-3/12 p-12 mx-auto my-32 right-0 left-0 bg-black text-white rounded-sm bg-opacity-80">
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        className="absolute w-3/12 p-12 mx-auto my-32 right-0 left-0 bg-black text-white rounded-sm bg-opacity-80"
+      >
         <h1 className="font-bold text-3xl p-1 my-3 ">
           {isSignInForm ? "Sign In" : "Sign Up"}
         </h1>
@@ -25,23 +63,33 @@ const Login = () => {
         {!isSignInForm && (
           <input
             type="text"
+            ref={fullName}
             placeholder="Enter Full Name"
             className="p-3 my-4 w-full  rounded-md  bg-black/90 border border-white"
           />
         )}
         <input
           type="text"
-          placeholder="Email or Mobile Number"
+          ref={email}
+          placeholder="Enter Email"
           className="p-3 my-4 w-full  rounded-md  bg-black/90 border border-white"
         />
         <input
           type="password"
-          placeholder="Password"
+          ref={password}
+          placeholder="Enter Password"
           className="p-3 my-4 w-full  rounded-md bg-black/80  border border-white"
         />
-        <button className="p-3 my-6 bg-red-800 w-full rounded-md">
+
+        <p>{errorMessage}</p>
+
+        <button
+          className="p-3 my-6 bg-red-800 w-full rounded-md"
+          onClick={handleClickButton}
+        >
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
+
         {/* <a href="https://www.netflix.com/in/LoginHelp" >Forgot Password</a> */}
         {isSignInForm ? (
           <p className="py-2 my-2 ">
