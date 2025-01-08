@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
-import { chechVlidateData } from "../Utils/Validate";
+import { chechVlidateData, nameValidation } from "../Utils/Validate";
 
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(true);
@@ -12,27 +12,29 @@ const Login = () => {
 
   // Validate the form Data
   const handleClickButton = () => {
-
-    if(!isSignInForm && fullName.current.value === ""){
-      alert("Please write your Name")
-   }
-    else if (email.current.value === "") {
+    if (!isSignInForm && fullName.current.value === "") {
+      alert("Please write your Name");
+    } else if (email.current.value === "") {
       alert("Please write your Email");
-    } 
-    else if (password.current.value === "") {
+    } else if (password.current.value === "") {
       alert("Please Write your Password");
-    }
-    else {
-      // console.log(email.current.value);
-      // console.log(password);
-
+    } else if (isSignInForm) {
       const message = chechVlidateData(
         email.current.value,
         password.current.value
       );
 
-      console.log(message);
+      console.log(email.current.value);
       setErrorMessage(message);
+    } else if (!isSignInForm) {
+      const message = chechVlidateData(
+        email.current.value,
+        password.current.value
+      );
+      setErrorMessage(message);
+
+      const newmessage = nameValidation(fullName.current.value);
+      setErrorMessage(newmessage);
     }
   };
 
@@ -81,7 +83,7 @@ const Login = () => {
           className="p-3 my-4 w-full  rounded-md bg-black/80  border border-white"
         />
 
-        <p>{errorMessage}</p>
+        <p className="text-red-800">{errorMessage}</p>
 
         <button
           className="p-3 my-6 bg-red-800 w-full rounded-md"

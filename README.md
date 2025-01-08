@@ -10,6 +10,9 @@ Tach Stack = ReactJS , Redux , Tailwind CSS
 - Sign Up Form
 - Form Validation
 - Useref Hook
+- Firebase Authintication Setup
+- Create Signup User Account In Firebase
+
 
 Feature : 
 
