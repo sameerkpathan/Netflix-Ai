@@ -23,8 +23,8 @@ const Login = () => {
       alert("Please Write your Password");
     }
     else {
-      console.log(email.current.value);
-      console.log(password);
+      // console.log(email.current.value);
+      // console.log(password);
 
       const message = chechVlidateData(
         email.current.value,
