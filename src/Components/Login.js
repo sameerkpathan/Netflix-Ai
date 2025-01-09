@@ -1,10 +1,19 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { chechVlidateData, nameValidation } from "../Utils/Validate";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../Utils/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+
+  const Navigate = useNavigate();
 
   let email = useRef(null);
   let password = useRef(null);
@@ -12,30 +21,58 @@ const Login = () => {
 
   // Validate the form Data
   const handleClickButton = () => {
-    
+    const message = chechVlidateData(
+      email.current.value,
+      password.current.value
+    );
+    setErrorMessage(message);
+
+    // Sign In Sign Up Logic
+
     if (!isSignInForm && fullName.current.value === "") {
       alert("Please write your Name");
-    } else if (email.current.value === "") {
-      alert("Please write your Email");
-    } else if (password.current.value === "") {
-      alert("Please Write your Password");
-    } else if (isSignInForm) {
-      const message = chechVlidateData(
-        email.current.value,
-        password.current.value
-      );
-
-      console.log(email.current.value);
-      setErrorMessage(message);
     } else if (!isSignInForm) {
-      const message = chechVlidateData(
+      // Sign Up Logic
+      createUserWithEmailAndPassword(
+        auth,
         email.current.value,
         password.current.value
-      );
-      setErrorMessage(message);
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log(user);
 
-      const newmessage = nameValidation(fullName.current.value);
-      setErrorMessage(newmessage);
+          // If User Succesfully Login then Navigate to Inside Page
+          Navigate("/browse");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          setErrorMessage(errorCode);
+        });
+    } else {
+      // Sign In Logic
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+
+          // If User Succesfully Login then Navigate to Inside Page
+          Navigate("/browse");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          setErrorMessage(errorCode);
+        });
     }
   };
 

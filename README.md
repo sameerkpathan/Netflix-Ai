@@ -12,7 +12,9 @@ Tach Stack = ReactJS , Redux , Tailwind CSS
 - Useref Hook
 - Firebase Authintication Setup
 - Create Signup User Account In Firebase
-
+- Implement Sign UP / Sign IN Api
+- Add Redux Toolkit and Store in App
+- Created store with userSlice
 
 Feature : 
 

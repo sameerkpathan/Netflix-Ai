@@ -17,12 +17,12 @@ export const chechVlidateData = (email, password) => {
   }
 };
 
-export const nameValidation = (name)=>{
-    const isNamevalid = /(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/.test(name);
+// export const nameValidation = (name)=>{
+//     const isNamevalid = /(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/.test(name);
 
-     if (!isNamevalid) {
-        return "Name is not correct";
-      } else {
-        return null;
-      }
-}
+//      if (!isNamevalid) {
+//         return "Name is not correct";
+//       } else {
+//         return null;
+//       }
+// }
