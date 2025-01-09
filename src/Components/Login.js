@@ -12,6 +12,7 @@ const Login = () => {
 
   // Validate the form Data
   const handleClickButton = () => {
+    
     if (!isSignInForm && fullName.current.value === "") {
       alert("Please write your Name");
     } else if (email.current.value === "") {
