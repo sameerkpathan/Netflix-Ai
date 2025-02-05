@@ -5,13 +5,17 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile
 } from "firebase/auth";
 import { auth } from "../Utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../Utils/userSlice";
 
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  const dispatch = useDispatch();
 
   const Navigate = useNavigate();
 
@@ -42,9 +46,33 @@ const Login = () => {
           // Signed up
           const user = userCredential.user;
           console.log(user);
+          // we can update user profile by addig there name
 
-          // If User Succesfully Login then Navigate to Inside Page
+          updateProfile(auth.user, {
+            displayName: fullName.current.value, photoURL: "https://lh3.googleusercontent.com/a/ACg8ocJQ2j4xviUG5-6v68jJQXDrI369rch1BhbVBnn1ZSK5yJsUDR0=s96-c"
+          }).then(() => {
+            // Profile updated!
+            // If User Succesfully Login then Navigate to Inside Page
+           const { uid, email, displayName, photoURL } = auth.currentUser;
+                   dispatch(
+                     addUser({
+                       uid: uid,
+                       email: email,
+                       displayName: displayName,
+                       photoURL: photoURL,
+                     })
+                   );
+
           Navigate("/browse");
+
+          }).catch((error) => {
+            // An error occurred
+            const errorMessage = error.message;
+           setErrorMessage(errorMessage)
+          });
+          
+
+          
         })
         .catch((error) => {
           const errorCode = error.code;

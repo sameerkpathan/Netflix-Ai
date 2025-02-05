@@ -15,6 +15,11 @@ Tach Stack = ReactJS , Redux , Tailwind CSS
 - Implement Sign UP / Sign IN Api
 - Add Redux Toolkit and Store in App
 - Created store with userSlice
+- Implemented Sign Out 
+- Updated profile 
+- Redirect Site
+-Fetch Movies from TMDB 
+
 
 Feature : 
 
